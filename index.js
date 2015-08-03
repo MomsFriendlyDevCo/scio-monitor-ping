@@ -28,14 +28,29 @@ module.exports = {
 			],
 			callback: function(next, service) {
 				var timeouts = [];
+				// Timeout handling {{{
+				// Since Ping relies on the system DNS table it can go for quite a while before eventually timing out
+				// This function watches ping and forces a timeout if it lasts longer than the timeoutDanger rating
+				var hasTimeout = false;
+				var timeoutHandle = setTimeout(function() {
+					hasTimeout = true;
+					return next(null, {
+						status: 'danger',
+						value: service.options.timeoutDanger,
+						response: 'timeout',
+					});
+				}, service.options.timeoutDanger);
+				// }}}
 				ping(service.address || service.server.address)
 					.on('error', function(err) {
 						return next(err);
 					})
 					.on('data', function(data) {
+						if (timeoutHandle) clearTimeout(timeoutHandle);
 						timeouts.push(data.time);
 					})
 					.on('exit', function() {
+						if (hasTimeout) return; // Already timed out
 						var totalTime = 0;
 						timeouts.forEach(function(time) { totalTime += time });
 						var averageTime = totalTime / timeouts.length;
