@@ -29,10 +29,13 @@ module.exports = {
 			callback: function(next, service) {
 				var timeouts = [];
 				ping(service.address || service.server.address)
+					.on('error', function(err) {
+						return next(err);
+					})
 					.on('data', function(data) {
 						timeouts.push(data.time);
 					})
-					.on('end', function(data) {
+					.on('exit', function() {
 						var totalTime = 0;
 						timeouts.forEach(function(time) { totalTime += time });
 						var averageTime = totalTime / timeouts.length;
