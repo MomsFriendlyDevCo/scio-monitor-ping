@@ -1,6 +1,6 @@
 {
   "name": "scio-monitor-ping",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Ping monitor for Scio",
   "main": "index.js",
   "repository": {
@@ -8,13 +8,13 @@
     "url": "https://github.com/MomsFriendlyDevCo/scio-monitor-ping"
   },
   "keywords": [
-    "scio",
     "monitor",
-    "ping"
+    "ping",
+    "scio"
   ],
   "author": "Matt Carter <m@ttcarter.com>",
   "license": "GPLv2",
   "dependencies": {
-    "ping": "^0.1.10"
+    "ping-wrapper2": "0.0.5"
   }
 }

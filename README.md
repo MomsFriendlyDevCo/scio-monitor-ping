@@ -1,4 +1,4 @@
 scio-monitor-ping
 =================
 
-Ping montior for [Scio](https://github.com/MomsFriendlyDevCo/Scio).
+Ping monitor for [Scio](https://github.com/MomsFriendlyDevCo/Scio).
